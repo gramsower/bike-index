@@ -6,7 +6,16 @@ export default class BikeService {
         const errorMessage = `${response.status} ${response.statusText}`;
         throw new Error(errorMessage);
       } else {
-        return response.json();
+        const queryResponse = response.json();
+        const filteredBikes = queryResponse.bikes.map(function(bike) {
+          return {
+            "serialNum" : bike.serial,
+            "date_stolen" : bike.date_stolen,
+            "title" : bike.title,
+            "url" : bike.url
+          }  
+        });
+        return filteredBikes;
       }
     })
     .catch(function(error) {

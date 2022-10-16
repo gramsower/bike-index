@@ -5,6 +5,18 @@ import BikeService from './bike-service.js';
 
 // Business Logic
 
+// function resultsFilter(response) {
+//   BikeService.resultsFilter(response)
+//   const filteredBikes = response.bikes.map(function(bike) {
+//     return {
+//       "serialNum" : bike.serial,
+//       "date_stolen" : bike.date_stolen,
+//       "title" : bike.title,
+//       "url" : bike.url
+//     }
+//   });
+// }
+
 function getStolen(location) {
   BikeService.getStolen(location)
   .then(function(response) {
