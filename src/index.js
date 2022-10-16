@@ -5,33 +5,35 @@ import BikeService from './bike-service.js';
 
 // Business Logic
 
-// function resultsFilter(response) {
-//   BikeService.resultsFilter(response)
-//   const filteredBikes = response.bikes.map(function(bike) {
-//     return {
-//       "serialNum" : bike.serial,
-//       "date_stolen" : bike.date_stolen,
-//       "title" : bike.title,
-//       "url" : bike.url
-//     }
-//   });
-// }
+//  function resultsFilter(response) {
+//    BikeService.resultsFilter(response);
+//    const filteredBikes = response.bikes.map(function (bike) {
+//      return {
+//        "serialNum": bike.serial,
+//        "date_stolen": bike.date_stolen,
+//        "title": bike.title,
+//        "url": bike.url
+//      };
+//    });
+//    return filteredBikes;
+//  }
 
 function getStolen(location) {
   BikeService.getStolen(location)
-  .then(function(response) {
-    if (response.bikes) {
-      printElements(response, location);
-    } else {
-      printError(response, location);
-    }
-  });
+    .then(function (response) {
+      if (response.bikes) {
+        console.log(response.bikes[0].manufacturer_name, location);
+        printElements(response.bikes[0].manufacturer_name, location);
+      } else {
+        printError(response, location);
+      }
+    });
 }
 
 // UI Logic
 
 function printElements(response, location) {
-document.querySelector('#showResponse').innerText = `The following bikes have been stolen in the ${location} area: ${response.bikes}`
+  document.querySelector('#showResponse').innerText = `The following bikes have been stolen in the ${location} area: ${response}`;
 }
 
 function printError(error, location) {
@@ -46,6 +48,6 @@ function handleFormSubmission(event) {
   getStolen(location);
 }
 
-window.addEventListener("load", function() {
+window.addEventListener("load", function () {
   this.document.querySelector('form').addEventListener("submit", handleFormSubmission);
 });
