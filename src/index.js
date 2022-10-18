@@ -5,25 +5,24 @@ import BikeService from './bike-service.js';
 
 // Business Logic
 
-//  function resultsFilter(response) {
-//    BikeService.resultsFilter(response);
-//    const filteredBikes = response.bikes.map(function (bike) {
-//      return {
-//        "serialNum": bike.serial,
-//        "date_stolen": bike.date_stolen,
-//        "title": bike.title,
-//        "url": bike.url
-//      };
-//    });
-//    return filteredBikes;
-//  }
-
+function resultsFilter(response, location) {
+  //   BikeService.resultsFilter(response);
+  const filteredBikes = response.bikes.map(function (bike) {
+    return { 
+      "serialNum": bike.serial,
+      "date_stolen": bike.date_stolen,
+      "title": bike.title,
+      "url": bike.url
+    };
+  });
+  console.log(filteredBikes);
+  printElements(filteredBikes, location);
+}
 function getStolen(location) {
   BikeService.getStolen(location)
     .then(function (response) {
       if (response.bikes) {
-        console.log(response.bikes[0].manufacturer_name, location);
-        printElements(response.bikes[0].manufacturer_name, location);
+        resultsFilter(response, location);
       } else {
         printError(response, location);
       }
@@ -32,8 +31,10 @@ function getStolen(location) {
 
 // UI Logic
 
-function printElements(response, location) {
-  document.querySelector('#showResponse').innerText = `The following bikes have been stolen in the ${location} area: ${response}`;
+function printElements(filteredBikes, location) {
+  const bikeList = JSON.stringify(filteredBikes)
+  document.querySelector('#showResponse').innerText = `The following bikes have been stolen in the ${location} area: ${bikeList}`;
+
 }
 
 function printError(error, location) {
