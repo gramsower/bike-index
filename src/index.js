@@ -6,16 +6,14 @@ import BikeService from './bike-service.js';
 // Business Logic
 
 function resultsFilter(response, location) {
-  //   BikeService.resultsFilter(response);
   const filteredBikes = response.bikes.map(function (bike) {
-    return { 
+    return {
       "title": bike.title,
       "serialNum": bike.serial,
       "date_stolen": bike.date_stolen,
       "url": bike.url
     };
   });
-//  console.log(filteredBikes);
   printElements(filteredBikes, location);
 }
 function getStolen(location) {
@@ -35,13 +33,13 @@ function printElements(filteredBikes, location) {
 
   document.querySelector('#showResponse').innerText = `The following bikes have been stolen in the ${location} area:`;
   let ul = document.createElement("ul");
-  for (let i=0; i < filteredBikes.length; i+=1) {
+  for (let i = 0; i < filteredBikes.length; i += 1) {
     let li = document.createElement("li");
     li.append(JSON.stringify(filteredBikes[i]));
     ul.append(li);
   }
   const bodyElement = document.querySelector("body");
-    bodyElement.append(ul);
+  bodyElement.append(ul);
 }
 
 function printError(error, location) {
