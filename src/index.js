@@ -9,13 +9,13 @@ function resultsFilter(response, location) {
   //   BikeService.resultsFilter(response);
   const filteredBikes = response.bikes.map(function (bike) {
     return { 
+      "title": bike.title,
       "serialNum": bike.serial,
       "date_stolen": bike.date_stolen,
-      "title": bike.title,
       "url": bike.url
     };
   });
-  console.log(filteredBikes);
+//  console.log(filteredBikes);
   printElements(filteredBikes, location);
 }
 function getStolen(location) {
@@ -32,9 +32,16 @@ function getStolen(location) {
 // UI Logic
 
 function printElements(filteredBikes, location) {
-  const bikeList = JSON.stringify(filteredBikes)
-  document.querySelector('#showResponse').innerText = `The following bikes have been stolen in the ${location} area: ${bikeList}`;
 
+  document.querySelector('#showResponse').innerText = `The following bikes have been stolen in the ${location} area:`;
+  let ul = document.createElement("ul");
+  for (let i=0; i < filteredBikes.length; i+=1) {
+    let li = document.createElement("li");
+    li.append(JSON.stringify(filteredBikes[i]));
+    ul.append(li);
+  }
+  const bodyElement = document.querySelector("body");
+    bodyElement.append(ul);
 }
 
 function printError(error, location) {
